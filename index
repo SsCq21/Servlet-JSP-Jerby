@@ -1,0 +1,74 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+    "http://www.w3.org/TR/html4/loose.dtd">
+
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Welcome to Spring Web MVC project</title>
+        
+         <meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>	
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+                                                                                                      
+<link href="css/csstyle.css" rel="stylesheet" type="text/css"/>
+            
+        <script type="text/javascript">
+            function check(){
+	var uname = document.getElementById("userid").value;
+	var upassword = document.getElementById("password").value;
+	if(uname==""){
+		alert("Userid cannot be null！");
+		return false;
+	}
+	if(upassword==""){
+		alert("Password cannot be null！");
+		return false;
+	}
+        }
+        
+</script>
+    </head>
+
+    <body style="background: url(img/CM.jpg);background-size:cover">
+        
+      
+      <div class="text-center"> 
+            <h1 style="text-align:center"><title1>Login</title1></h1>
+    </div>
+        
+       <p style="margin:20px"></p> 
+       
+        <div class="row text-center">  
+             <div class="col-sm-6 text-center" style="background-color:lightcyan;"> 
+        <form action="LoginS" method="post" onsubmit="return check()">
+        <table border="0" width="400px">
+           <tr>
+               <td align="right"><h3>UserID:</h3></td>
+             <td><input type="text" id="userid" name="userid" style="width: 180px"/></td>
+           </tr>
+           <tr>
+               <td align="right"><h3>Password:</h3></td>
+             <td><input type="password" id="password" name="password" style="width: 180px"/></td>
+           </tr>
+           <tr>
+               <td align="right"><input type="submit" value="login"/></td>
+             <td><input type="reset" value="reset"/></td>
+           </tr>
+           <tr>
+             <td></td>
+             <td><err>${message}</err></td>
+           </tr>
+        </table>
+     </form>
+             </div>
+           <div class="col-sm-6 text-center" style="background-color:lavender;"> 
+               <h4><err>Tips</err></h4>
+               <h5>UserID: 8</h5>
+               <h5>Password: 8</h5>
+           </div>      
+     </div>
+    </body>
+    </body>
+</html>
