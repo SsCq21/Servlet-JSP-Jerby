@@ -1,0 +1,61 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package bean;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.*;
+/**
+ *
+ * @author yjs009
+ */
+public class DBconn {
+
+    Statement stmt=null;
+	Connection con=null;
+        public DBconn() {
+            try {
+	         Class.forName("org.apache.derby.jdbc.ClientDriver");
+	        con=DriverManager.getConnection("jdbc:derby://localhost:1527/IS2560","IS2560","IS2560");
+	        stmt=con.createStatement();
+	   } 
+		catch (Exception ex) {
+	        	  System.err.println(ex.getMessage());;
+	          } 
+
+        }
+	
+	public void executeUpdate(String sql) {
+		try {
+			stmt=con.createStatement();
+			stmt.executeUpdate(sql);
+		}
+		catch(Exception ex) {
+			System.err.println(ex.getMessage()); 
+		}		
+	}
+	public ResultSet executeQuery(String sql) {
+		ResultSet rs=null;
+		try {
+			stmt=con.createStatement();
+			rs=stmt.executeQuery(sql);
+		}
+		catch(Exception ex) {
+			System.err.println(ex.getMessage()); 
+		}
+		return rs;
+	}
+	public void close() {
+		try {
+			stmt.close();
+			con.close();
+		}
+		catch(Exception ex) {
+			System.err.println(ex.getMessage()); 
+		}
+	}
+}
