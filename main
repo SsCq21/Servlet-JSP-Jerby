@@ -1,0 +1,121 @@
+<%-- 
+    Document   : main
+    Created on : 2018-11-4, 17:38:29
+    Author     : yjs009
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page language="java" import="java.util.*" import="java.sql.*" import="bean.User" import="bean.DBconn"%>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>	
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+                                                                                                      
+<link href="css/csstyle.css" rel="stylesheet" type="text/css"/>
+            
+        <script type="text/javascript">
+            function check(){
+         
+	var uname = document.getElementById("userid").value;
+	var upassword = document.getElementById("password").value;
+	if(uname==""){
+		alert("Userid cannot be null！");
+		return false;
+	}
+	if(upassword==""){
+		alert("Password cannot be null！");
+		return false;
+	}
+        }
+        
+</script>
+<!DOCTYPE html>
+<jsp:useBean id="db" class="bean.DBconn" scope="page"/>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Main</title>
+    </head>
+    <body style="background: url(img/CM.jpg);background-size:cover">
+        <div class="text-left">
+            <h4><a href="index.jsp">Logout</a></h4>
+        </div>
+        
+        <div class="text-center"> 
+            <h1 style="text-align:center"><title1>Welcome~<%=session.getAttribute("user") %></title1></h1>
+    </div>
+
+    <div class="row text-center">  
+    <div class="col-sm-6 text-center" style="background-color:rgba(0,0,100,0.1);">
+        <h3>Here is existed users:</h3>
+        
+        <table border="1" width=100% align="cernter">
+            <tr><th><h3 align="center">UID</h3> </th>
+            <th><h3 align="center">Password</h3> </th>
+            </tr>
+            <%
+                 try{ 
+     Class.forName("org.apache.derby.jdbc.ClientDriver");
+     }
+ catch(ClassNotFoundException  e)  {}
+
+String url="jdbc:derby://localhost:1527/IS2560";
+Connection conn=DriverManager.getConnection(url,"IS2560","IS2560");
+Statement s=conn.createStatement();
+
+  String  sql2="select UID,UPWD from USSER";
+  Statement s2=conn.createStatement();
+  ResultSet ck2=s2.executeQuery(sql2); 
+                int i=0;
+                ArrayList userlist=new ArrayList();
+                while (ck2.next()) {
+                    String userid=ck2.getString("UID");
+                    String password=ck2.getString("UPWD");
+                    User user=new User();
+                    user.setUserid(userid);
+                    user.setPwd(password);
+                    userlist.add(i,user);
+                
+%>
+<tr>
+    <td align="center"><h3><%=userid%></h3></td>
+    <td align="center"><h3><%=password%></h3></td>
+</tr>
+<%
+    i=i+1; }
+    session.setAttribute("userlist", userlist);
+    s2.close();
+conn.close();
+
+    %>
+                           
+        </table>      
+    </div>
+    
+    <div class="col-sm-6 text-center" style="background-color:rgba(100,0,0,0.1);">
+        <h3>Add new users here:</h3>
+        
+        <form action="AddS" method="post" onsubmit="return check()">
+        <table border="0" width="400px">
+           <tr>
+               <td align="center"><h4>UserID:</h4></td>
+             <td><input type="text" id="userid" name="userid" style="width: 180px"/></td>
+           </tr>
+           <tr>
+               <td align="center"><h4>Password:</h4></td>
+             <td><input type="password" id="password" name="password" style="width: 180px"/></td>
+           </tr>
+           <tr>
+               <td align="center"><input type="submit" value="add"/></td>
+             <td><input type="reset" value="reset"/></td>
+           </tr>
+           <tr>
+             <td></td>
+             <td><err>${message}</err></td>
+           </tr>
+        
+    </div>
+    </div>     
+    </body>
+</html>
